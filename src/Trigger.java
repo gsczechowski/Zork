@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Trigger {
 
 	private boolean permanent; //!type
+	private Condition condition;
 	private String command = null;
 	private ArrayList<String> actions = new ArrayList<String>();
 	private ArrayList<String> prints = new ArrayList<String>();

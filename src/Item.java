@@ -3,11 +3,11 @@ import java.util.Map;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-public class Item {
+public class Item extends TriggerableObject{
 
 	private String name = null, status = null, description = null, writing = "Nothing written.";
 	private String turn_on = null;
-	private Map<String, Trigger> triggers = new HashMap<String, Trigger>();
+	//private Map<String, Trigger> triggers = new HashMap<String, Trigger>();
 	
 	public Item(){
 		

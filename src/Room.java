@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class Room {
+public class Room extends TriggerableObject{
 
 	private String name;
 	private String status;
@@ -16,7 +16,7 @@ public class Room {
 	private Set<String> containers = new HashSet<String>();
 	private Set<String> items = new HashSet<String>();
 	private Set<String> creatues = new HashSet<String>();
-	private Set<Trigger> triggers = new HashSet<Trigger>();
+	//private Set<Trigger> triggers = new HashSet<Trigger>();
 	
 	/*public ArrayList<String> checkTriggersCommand(String command){
 		ArrayList<String> actions = new ArrayList<String>();
