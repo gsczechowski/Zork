@@ -15,13 +15,15 @@ public class Zork {
 	private Room currentRoom;
 	
 	
-	public Zork(String Filename){
+	public Zork(String XMLin){
 		
 	}
+	
 	
 	private void Play(){
 		Scanner in = new Scanner(System.in);
 		String command;
+		//ArrayList<String> actions;
 		while(true){
 			//get input
 			System.out.print(">");
@@ -34,9 +36,14 @@ public class Zork {
 				if(nextRoom == null){
 					System.out.println("Can't go that way");
 				} else {
-					//update contents of room
-					room_list.put(currentRoom.getName(), currentRoom);
-					currentRoom = getRoom(nextRoom);
+					/*if((actions = getRoom(nextRoom).checkTriggersCommand(command)) == NULL){
+						//update contents of room
+						room_list.put(currentRoom.getName(), currentRoom);
+						currentRoom = getRoom(nextRoom);
+					} else {
+						//found triggers
+						
+					}*/
 				}
 			}
 			
@@ -123,7 +130,7 @@ public class Zork {
 			//game over
 			else if(command.equals("Game Over")){
 				System.out.println("Victory!");
-				break;
+				System.exit(0);
 			}
 			
 			//================= BAD COMMAND ======================
@@ -131,6 +138,47 @@ public class Zork {
 				Error();
 			}
 		}
+	}
+	
+	public void takeActions(ArrayList<String> commands){
+		for(String command : commands){
+			if(command.contains("Add")){
+				
+			}
+			
+			//delete object
+			else if(command.contains("Delete")){
+				
+			}
+			
+			//update
+			else if(command.contains("Update")){
+				
+			}
+			
+			//game over
+			else if(command.equals("Game Over")){
+				System.out.println("Victory!");
+				System.exit(0);
+			}
+			
+			//================= BAD COMMAND ======================
+			else{
+				Error();
+			}
+		}
+	}
+	
+	
+	private void handleTriggers(Set<Trigger> triggers){
+		ArrayList<String> actions = new ArrayList<String>();
+		for(Trigger trigger : triggers){
+			for(String print : trigger.getPrints()){
+				System.out.println(print);
+			}
+			
+		}
+		takeActions(actions);
 	}
 	
 	

@@ -3,6 +3,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class Room {
@@ -14,7 +16,38 @@ public class Room {
 	private Set<String> containers = new HashSet<String>();
 	private Set<String> items = new HashSet<String>();
 	private Set<String> creatues = new HashSet<String>();
-	private Map<String, Trigger> triggers = new HashMap<String, Trigger>();
+	private Set<Trigger> triggers = new HashSet<Trigger>();
+	
+	/*public ArrayList<String> checkTriggersCommand(String command){
+		ArrayList<String> actions = new ArrayList<String>();
+		if(triggers.isEmpty()){
+			return null;
+		}
+		for(Trigger trigger : triggers){
+			if(trigger.hasCommand() && trigger.getCommand().equals(command)){
+				actions.addAll(trigger.getActions());
+				if(!trigger.isPermanent())
+					triggers.remove(trigger);
+			}
+		}
+		actions.addAll(checkTriggers());
+		return actions;
+	}
+	
+	public ArrayList<String> checkTriggers(){
+		ArrayList<String> actions = new ArrayList<String>();
+		if(triggers.isEmpty()){
+			return null;
+		}
+		for(Trigger trigger : triggers){
+			if(!trigger.hasCommand()){
+				actions.addAll(trigger.getActions());
+				if(!trigger.isPermanent())
+					triggers.remove(trigger);
+			}
+		}
+		return actions;
+	}*/
 	
 	public boolean hasBorder(String direction){
 		return borders.containsKey(direction);
