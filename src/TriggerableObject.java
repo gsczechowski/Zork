@@ -1,3 +1,4 @@
-public class TriggerableObject(){
+
+public class TriggerableObject {
 
 }
