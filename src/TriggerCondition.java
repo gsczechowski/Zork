@@ -6,16 +6,17 @@ public class TriggerCondition{
 	private String owner;
 	
 	
-	public void checkCondition(String command){
+	public boolean checkCondition(String command){
 		if(type_command){
 			if(this.command.equals(command)){
-				return true;
+				//return true;
 			} else {
-				return false;
+				//return false;
 			}
 		} else {
 			
 		}
+		return false;
 	}
 	
 	public void checkCondition(){

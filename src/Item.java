@@ -2,23 +2,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Item extends TriggerableObject{
 
 	private String name = null, status = null, description = null, writing = "Nothing written.";
 	private String turn_on = null;
-	//private Map<String, Trigger> triggers = new HashMap<String, Trigger>();
+	private Set<Trigger> triggers = new HashSet<Trigger>();
 	
 	public Item(){
 		
 	}
 	
 	public ArrayList<Trigger> getTriggers(){
-		return new ArrayList<Trigger>(triggers.values());
+		return new ArrayList<Trigger>(triggers);
 	}
 	
-	public void addTrigger(String name, Trigger trigger){
-		triggers.put(name, trigger);
+	public void addTrigger(Trigger trigger){
+		triggers.add(trigger);
 	}
 	
 	public void setName(String name){
