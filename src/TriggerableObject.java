@@ -7,8 +7,32 @@ import java.util.Set;
 
 
 public class TriggerableObject {
-
-	private Set<Trigger> triggers = new HashSet<Trigger>();
+	
+	
+	protected String description, name, status;
+	protected Set<Trigger> triggers = new HashSet<Trigger>();
+	
+	
+	
+	public void setStatus(String status){
+		this.status = status;
+	}
+	
+	public String getStatus(){
+		return status;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setDescription(String desc){
+		description = desc;
+	}
 	
 	public void addTrigger(Trigger trigger){
 		triggers.add(trigger);

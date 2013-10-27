@@ -9,9 +9,7 @@ import java.util.Iterator;
 
 public class Room extends TriggerableObject{
 
-	private String name;
-	private String status;
-	private String description;
+
 	private String type = "regular";
 	private Map<String, String> borders = new HashMap<String, String>();
 	private Set<String> containers = new HashSet<String>();
@@ -19,9 +17,6 @@ public class Room extends TriggerableObject{
 	private Set<String> creatures = new HashSet<String>();
 	
 	
-	public void setStatus(String status){
-		this.status = status;
-	}
 	
 	public void addContainer(String container){
 		containers.add(container);
@@ -31,17 +26,7 @@ public class Room extends TriggerableObject{
 		creatures.add(creature);
 	}
 	
-	public void setDescription(String description){
-		this.description = description;
-	}
 	
-	public String getDescription(){
-		return description;
-	}
-	
-	public void setName(String name){
-		this.name = name;
-	}
 	
 	public boolean hasBorder(String direction){
 		return borders.containsKey(direction);
@@ -57,10 +42,6 @@ public class Room extends TriggerableObject{
 	
 	public String getBorder(String name){
 		return borders.get(name);
-	}
-	
-	public String getName(){
-		return name;
 	}
 	
 	public boolean hasItem(String item){
@@ -84,37 +65,4 @@ public class Room extends TriggerableObject{
 		this.type = type;
 	}
 	
-	
-	//private Set<Trigger> triggers = new HashSet<Trigger>();
-	
-		/*public ArrayList<String> checkTriggersCommand(String command){
-			ArrayList<String> actions = new ArrayList<String>();
-			if(triggers.isEmpty()){
-				return null;
-			}
-			for(Trigger trigger : triggers){
-				if(trigger.hasCommand() && trigger.getCommand().equals(command)){
-					actions.addAll(trigger.getActions());
-					if(!trigger.isPermanent())
-						triggers.remove(trigger);
-				}
-			}
-			actions.addAll(checkTriggers());
-			return actions;
-		}
-		
-		public ArrayList<String> checkTriggers(){
-			ArrayList<String> actions = new ArrayList<String>();
-			if(triggers.isEmpty()){
-				return null;
-			}
-			for(Trigger trigger : triggers){
-				if(!trigger.hasCommand()){
-					actions.addAll(trigger.getActions());
-					if(!trigger.isPermanent())
-						triggers.remove(trigger);
-				}
-			}
-			return actions;
-		}*/
 }

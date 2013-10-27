@@ -29,6 +29,9 @@ public class XMLParser {
 				boolean inTrigger = false;
 				boolean inAttack = false;
 				boolean inItem = false;
+				boolean inCondition = false;
+				boolean type_has = false;
+				boolean inTurnOn = false;
 				Attack currentAttack;
 				Trigger currentTrigger;
 				Room currentRoom; 
@@ -36,7 +39,8 @@ public class XMLParser {
 				Container currentContainer;
 				TriggerCondition currentCondition;
 				Item currentItem;
-				String value, direction, name;
+				TurnOn currentTurnOn;
+				String value, direction, name, type;
 				
 				public void startElement(String uri, String localName,String qName, Attributes attributes) throws SAXException {
 					//System.out.println("Start Element:" + qName);
@@ -69,7 +73,6 @@ public class XMLParser {
 							currentItem = new Item();
 							inItem = true;
 						}
-						//TODO
 						break;
 						
 					case "trigger":
@@ -94,10 +97,12 @@ public class XMLParser {
 						break;
 						
 					case "condition":
-						//TODO
+						inCondition = true;
+						currentCondition = new TriggerCondition();
 						break;
 						
 					case "has":
+						type_has = true;
 						getValue = true;
 						break;
 						
@@ -122,7 +127,8 @@ public class XMLParser {
 						break;
 						
 					case "turnon":
-						//TODO
+						inTurnOn = true;
+						currentTurnOn = new TurnOn();
 						break;
 						
 					case "action":
@@ -152,7 +158,7 @@ public class XMLParser {
 						break;
 						
 					case "attack":
-						//TODO
+						currentAttack = new Attack();
 						break;
 						
 					case "accept":
@@ -207,8 +213,17 @@ public class XMLParser {
 						if(inRoom){
 							Debug.println("Setting description to: " + value);
 							currentRoom.setDescription(value);
+						} else if(inItem){
+							Debug.println("Setting description to: " + value);
+							currentItem.setDescription(value);
+						} else if(inContainer){
+							Debug.println("Setting description to: " + value);
+							currentContainer.setDescription(value);
+						} else if(inCreature){
+							Debug.println("Setting description to: " + value);
+							currentCreature.setDescription(value);
 						} else {
-							//TODO
+							System.out.println("Bad description");
 						}
 						getValue = false;
 						break;
@@ -226,10 +241,21 @@ public class XMLParser {
 							currentItem = null;
 							inItem = false;
 						}
-						//TODO
 						break;
 						
 					case "trigger":
+						if(type.equals("permanent")){
+							Debug.println("Trigger: setting type to: permanent");
+							currentTrigger.setPermanent(true);
+						} else if (type.equals("single")){
+							Debug.println("Trigger: setting type to: single");
+							currentTrigger.setPermanent(false);
+						} else if (type == null){
+							Debug.println("Trigger: setting type to: single");
+							currentTrigger.setPermanent(false);
+						} else {
+							System.out.println("Error in trigger type");
+						}
 						if(inRoom){
 							Debug.println("Adding trigger to room");
 							currentRoom.addTrigger(currentTrigger);
@@ -238,7 +264,7 @@ public class XMLParser {
 						} else {
 							
 						}
-						//TODO
+						type = null;
 						break;
 						
 					case "border":
@@ -267,36 +293,68 @@ public class XMLParser {
 					case "type":
 						if(inRoom){
 							if(inTrigger){
-								//TODO
+								type = value;
+								//Debug.println("Setting trigger type to: " + value);
+								//currentTrigger.setType(value);
 							} else {
 								Debug.println("Adding type to room: " + value);
 								currentRoom.setType(value);
 							}
+						} else if (inTrigger){
+							type = value;
+							//Debug.println("Setting trigger type to: " + value);
+							//currentTrigger.setType(value);
 						}
-						//TODO
 						getValue = false;
 						break;
 					
 					case "command":
-						//TODO
+						Debug.println("Setting command to: " + value);
+						currentTrigger.setCommand(value);
 						getValue = false;
 						break;
 						
 					case "print":
-						//TODO
+						if(inAttack){
+							Debug.println("Adding print to attack: " + value);
+							currentAttack.addPrint(value);
+						}
+						if(inTurnOn){
+							Debug.println("Adding print to turn on: " + value);
+							currentTurnOn.setPrint(value);
+						} else if(inTrigger){
+							Debug.println("Adding print to trigger: " + value);
+							currentTrigger.addPrint(value);
+						} else {
+							System.out.println("Error: bad print found.");
+						}
 						getValue = false;
 						break;
 						
 					case "condition":
-						//TODO
+						if(inCondition){
+							if(type_has){
+								currentCondition.setStatusType(false);
+							} else {
+								currentCondition.setStatusType(true);
+							}
+							currentTrigger.addCondition(currentCondition);
+							currentCondition = null;
+							Debug.println("Adding condition to Trigger.");
+						} else if (inAttack){
+							currentAttack.setCondition(currentCondition);
+						}else {
+							System.out.println("Bad condition structure.");
+						}
 						break;
 						
 					case "has":
-						//TODO
 						if(value.equals("yes")){
-							//TODO
+							Debug.println("Setting has to: yes");
+							currentCondition.setHas(true);
 						} else if(value.equals("no")){
-							//TODO
+							Debug.println("Setting has to: no");
+							currentCondition.setHas(false);
 						} else {
 							System.out.println("Bad has.");
 						}
@@ -304,12 +362,14 @@ public class XMLParser {
 						break;
 						
 					case "object":
-						//TODO
+						Debug.println("Setting condition object to: " + value);
+						currentCondition.setObject(value);
 						getValue = false;
 						break;
 						
 					case "owner":
-						//TODO
+						Debug.println("Setting condtion owner to: " + value);
+						currentCondition.setOwner(value);
 						getValue = false;
 						break;
 						
@@ -327,28 +387,32 @@ public class XMLParser {
 					case "status":
 						if(inRoom) {
 							if(inTrigger){
-								
+								Debug.println("Setting current condition status to: " + value);
+								currentCondition.setStatus(value);
 							} else {
 								Debug.println("Setting room status to: " + value);
 								currentRoom.setStatus(value);
 							}
 						} else if(inItem){
 							if(inTrigger){
-								
+								Debug.println("Setting current condition status to: " + value);
+								currentCondition.setStatus(value);
 							} else {
 								Debug.println("Setting item status to: " + value);
 								currentItem.setStatus(value);
 							}
 						} else if(inContainer){
 							if(inTrigger){
-								
+								Debug.println("Setting current condition status to: " + value);
+								currentCondition.setStatus(value);
 							} else {
 								Debug.println("Setting container status to: " + value);
 								currentContainer.setStatus(value);
 							}
 						} else if(inCreature){
 							if(inTrigger){
-								
+								Debug.println("Setting current condition status to: " + value);
+								currentCondition.setStatus(value);
 							} else {
 								Debug.println("Setting creature status to: " + value);
 								currentCreature.setStatus(value);
@@ -356,17 +420,26 @@ public class XMLParser {
 						} else {
 							System.out.println("HANGING STATUS");
 						}
-						//TODO
 						getValue = false;
 						break;
 						
 					case "turnon":
-						//TODO
+						currentItem.setTurnOn(currentTurnOn);
+						currentTurnOn = null;
+						inTurnOn = false;
 						getValue = false;
 						break;
 						
 					case "action":
-						//TODO
+						if(inTurnOn){
+							Debug.println("Action added to turn on: " + value);
+							currentTurnOn.setAction(value);
+						} else if(inTrigger){
+							Debug.println("Action added to trigger: " + value);
+							currentTrigger.addAction(value);
+						} else {
+							System.out.println("Bad action found.");
+						}
 						getValue = false;
 						break;
 						
@@ -381,7 +454,6 @@ public class XMLParser {
 							currentContainer = null;
 							inContainer = false;
 						}
-						//TODO
 						break;
 						
 					case "creature":
@@ -404,7 +476,7 @@ public class XMLParser {
 						break;
 						
 					case "attack":
-						//TODO
+						//Debug.println("Adding attack to current creature: " + value);
 						break;
 						
 					case "accept":

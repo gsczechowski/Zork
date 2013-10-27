@@ -1,26 +1,36 @@
 public class TriggerCondition{
 
-	private boolean type_command;
 	private String command = null;
+	private boolean status_type;
+	private boolean has;
 	private String object;
 	private String owner;
+	private String status;
 	
-	
-	public boolean checkCondition(String command){
-		if(type_command){
-			if(this.command.equals(command)){
-				//return true;
-			} else {
-				//return false;
-			}
-		} else {
-			
-		}
-		return false;
+	public TriggerCondition(){
 	}
 	
-	public void checkCondition(){
-		checkCondition(null);
+	public void setHas(boolean has){
+		this.has = has;
+		this.status_type = false;
 	}
+	
+	public void setStatusType(boolean status_type){
+		this.status_type = status_type;
+	}
+	
+	public void setObject(String object){
+		this.object = object;
+	}
+	
+	public void setOwner(String owner){
+		this.owner = owner;
+	}
+	
+	public void setStatus(String status){
+		this.status = status;
+	}
+	
+
 	
 }
