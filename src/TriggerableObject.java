@@ -13,9 +13,62 @@ public class TriggerableObject {
 	protected Set<Trigger> triggers = new HashSet<Trigger>();
 	
 	
+	public boolean checkCommandTriggers(String command){
+		for(Trigger trigger : triggers){
+			if(trigger.used == false){
+				if(trigger.hasCommand() && trigger.commandMatch(command)){
+					if(trigger.checkConditionsTrue()){
+						trigger.used = true;
+						trigger.execute();
+						for(Trigger trigger2 : triggers){
+							if(trigger2.permanent){
+								trigger2.used = false;
+							}
+						}
+						return true;
+					}
+				}
+			}
+		}
+		for(Trigger trigger : triggers){
+			if(trigger.permanent){
+				trigger.used = false;
+			}
+		}
+		return false;
+	}
+	
+	public void checkTriggers(){
+		for(Trigger trigger : triggers){
+			if(trigger.used == false){// || trigger.permanent){
+				if(!trigger.hasCommand()){
+					if(trigger.checkConditionsTrue()){
+						trigger.used = true;
+						trigger.execute();
+					}
+				}
+			}
+		}
+		for(Trigger trigger : triggers){
+			if(trigger.permanent){
+				trigger.used = false;
+			}
+		}
+	}
+	
+	public String getDescription(){
+		return description;
+	}
+	
+	
 	
 	public void setStatus(String status){
 		this.status = status;
+	}
+	
+	public ArrayList<Trigger> getTriggers(){
+		Debug.println(name + " has " + triggers.size() + " triggers");
+		return new ArrayList<Trigger>(triggers);
 	}
 	
 	public String getStatus(){

@@ -20,15 +20,20 @@ public class Item extends TriggerableObject{
 		this.turnOn = TO;
 	}
 	
-	public ArrayList<Trigger> getTriggers(){
-		return new ArrayList<Trigger>(triggers);
-	}
 	
 	public void addTrigger(Trigger trigger){
 		triggers.add(trigger);
 	}
 	
 	
+	public void turnOn(){
+		if(turnOn != null){
+			System.out.println("You active the " + name + ".");
+			turnOn.execute();
+		} else {
+			Game.Error();
+		}
+	}
 	
 	
 	public void setWriting(String writing){

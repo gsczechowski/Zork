@@ -1,0 +1,22 @@
+Room - Entrance
+>Room - Main
+>Check1
+Error
+>Room - Entrance
+>Item axe added to inventory.
+>Room - Main
+>Check1
+You assault the dragon with the axe.
+>Room - Staircase (exit)
+Check1
+>bottle contains note 
+>Item note added to inventory.
+Check1
+axe got sharper
+>Room - Main
+>Room - Entrance
+>Room - Main
+>Check1
+Error
+You assault the dragon with the axe.
+Victory!

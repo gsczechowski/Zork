@@ -18,4 +18,13 @@ public class Creature extends TriggerableObject{
 		this.attack = attack;
 	}
 	
+	public void attack(String weapon, String attack_msg){
+		Debug.println("In creature attack");
+		if(attack != null && vulnerabilities.contains(weapon)){
+			attack.attack(attack_msg);
+		} else {
+			Game.Error();
+		}
+	}
+	
 }
