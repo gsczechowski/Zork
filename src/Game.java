@@ -208,14 +208,29 @@ public class Game {
 
 			//look
 			else if(command.equals("look")){
+				System.out.println("There are several items strewn across the room, these include:");
 				for(String item : currentRoom.getItems()){
-					System.out.println(item + ": " + item_list.get(item).getDescription());
+					if(item_list.get(item).getDescription() != null){
+						System.out.println(item + ": " + item_list.get(item).getDescription());
+					} else {
+						System.out.println(item);
+					}
 				}
+				System.out.println("\nThere are also several containers:");
 				for(String container : currentRoom.getContainers()){
-					System.out.println(container + ": " + container_list.get(container).getDescription());
+					if(container_list.get(container).getDescription() != null){
+						System.out.println(container + ": " + container_list.get(container).getDescription());
+					} else {
+						System.out.println(container);
+					}
 				}
+				System.out.println("\nDon't forget scary creatures!");
 				for(String creature : currentRoom.getCreatures()){
-					System.out.println(creature + ": " + creature_list.get(creature).getDescription());
+					if(creature_list.get(creature).getDescription() != null){
+						System.out.println(creature + ": " + creature_list.get(creature).getDescription());
+					} else {
+						System.out.println(creature);
+					}
 				}
 
 			}

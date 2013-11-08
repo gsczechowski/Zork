@@ -32,7 +32,7 @@ public class Zork {
 			}
 		} else {
 			//Zork zork = new Zork("samples/" + fname + "sample.xml");
-			Zork zork = new Zork("sample.xml");
+			Zork zork = new Zork("samples/sampledemo2.xml");
 			System.out.println(Game.getCurrentRoom().getDescription());
 			Game.Play();
 		}
